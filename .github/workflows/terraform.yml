@@ -13,14 +13,15 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Terraform Install
-        run: |
-          echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] https://apt.releases.hashicorp.com $(grep -oP '(?<=UBUNTU_CODENAME=).*' /etc/os-release || lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/hashicorp.list
-          sudo apt-get install terraform
+      - uses: hashicorp/setup-terraform@dfe3c3f87815947d99a8997f908cb6525fc44e9e # v4.0.1
+
+      - name: Terraform Init
+        working-directory: ./terraform
+        run: terraform init
 
       - name: Terraform Plan
-        run: |
-          terraform plan
+        working-directory: ./terraform
+        run: terraform plan -no-color
 
 #   merge:
 #     name: Terraform Plan and Apply
