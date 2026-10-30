@@ -1,7 +1,7 @@
 name: Terraform Plan and Apply
 
 on:
-  pull_request:
+  push:
     branches:
       - main
 
@@ -18,7 +18,7 @@ jobs:
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
-          persistent-credentials: false
+          persist-credentials: false
           fetch-depth: 1
 
       - name: Configure AWS Credentials
@@ -51,6 +51,11 @@ jobs:
     environment: prod
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+          fetch-depth: 1
+
       - uses: actions/download-artifact@v8
         with:
           artifact-id: ${{ needs.plan.outputs.artifact-id }}
