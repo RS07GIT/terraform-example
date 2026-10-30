@@ -1,0 +1,23 @@
+name: Terraform plan and apply
+
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  plan:
+    name: Terraform
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Terraform Install
+        run: |
+          sudo apt-get install terraform
+
+      - name: Terraform Plan
+        run: |
+          terraform plan -out=./tfplan.txt
+
+      - name: Terraform Apply
+        run: terraform apply ./tfplan.txt
