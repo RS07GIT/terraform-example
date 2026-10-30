@@ -1,7 +1,10 @@
 name: Terraform Plan
 
 on:
-    push
+    push:
+      branches:
+        - '**'
+        - '!main'
 
 permissions:
   id-token: write
